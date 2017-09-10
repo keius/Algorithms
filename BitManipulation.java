@@ -1,20 +1,28 @@
-ArrayList<Integer> getAlternatingSequences(int n) {
-  ArrayList<Integer> sequences = new ArrayList<Integer>();
+import java.util.ArrayList;
 
-  int searchingFor = 0;
-  int counter = 0;
+public class BitManipulation {
 
-  for (int i = 0; i < Integer.BYTES * 8; i++) {
-    if ((n & 1) != searchingFor) {
-      sequences.add(counter);
-      searchingFor = n & 1;
-      counter = 0;
+  ArrayList<Integer> getAlternatingSequences(int n) {
+    ArrayList<Integer> sequences = new ArrayList<Integer>();
+
+    int searchingFor = 0;
+    int counter = 0;
+
+    for (int i = 0; i < Integer.BYTES * 8; i++) {
+      if ((n & 1) != searchingFor) {
+        sequences.add(counter);
+        searchingFor = n & 1;
+        counter = 0;
+      }
+
+      counter++;
+      n >>>= 1;
     }
-    counter++;
-    n >>>= 1;
+
+    sequences.add(counter);
+
+    return sequences;
   }
 
-  sequences.add(counter);
-
-  return sequences;
+  Integer.BYTES * 8
 }
