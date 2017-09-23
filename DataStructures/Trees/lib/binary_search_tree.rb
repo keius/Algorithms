@@ -16,14 +16,7 @@ class BinarySearchTree
   end
 
   def find(value, tree_node = @root)
-    return tree_node if value == tree_node.value
-    if value < tree_node.value
-      return nil unless tree_node.left
-      find(value, tree_node.left)
-    else
-      return nil unless tree_node.right
-      find(value, tree_node.right)
-    end
+
   end
 
   def delete(value)
@@ -32,12 +25,7 @@ class BinarySearchTree
 
   # helper method for #delete:
   def self.delete_min!(node)
-    return nil unless node
-    if node.left == BinarySearchTree.min(node)
-      node.left = node.left.right
-    else
-      BinarySearchTree.delete_min!(node.left)
-    end
+
   end
 
   def self.delete!(node, value)
