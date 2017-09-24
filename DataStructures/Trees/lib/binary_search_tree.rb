@@ -8,11 +8,7 @@ class BinarySearchTree
   end
 
   def insert(value)
-    if @root
-      BinarySearchTree.insert!(@root, value)
-    else
-      @root = BSTNode.new(value)
-    end
+
   end
 
   def find(value, tree_node = @root)
@@ -28,22 +24,7 @@ class BinarySearchTree
   end
 
   def self.delete!(node, value)
-    return nil unless node
 
-    if node.value < value
-      node.right = BinarySearchTree.delete!(node.right, value)
-    elsif node.value > value
-      node.left = BinarySearchTree.delete!(node.left, value)
-    else
-      return node.left unless node.right
-      return node.right unless node.left
-
-      target = node
-      node = target.right.min
-      node.right = BinarySearchTree.delete_min!(target.right)
-      node.left = target.left
-    end
-    node
   end
 
   def self.min(node)
