@@ -20,7 +20,6 @@ class BinarySearchTree
   end
 
   def delete(value)
-    @root = BinarySearchTree.delete!(@root, value)
   end
 
   # helper method for #delete:
