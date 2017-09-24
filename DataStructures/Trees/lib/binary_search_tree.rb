@@ -57,20 +57,7 @@ class BinarySearchTree
   private
   # optional helper methods go here:
   def self.insert!(node, value)
-    return unless node
-    if value > node.value
-      if node.right
-        BinarySearchTree.insert!(node.right, value)
-      else
-        node.right = BSTNode.new(value)
-      end
-    else
-      if node.left
-        BinarySearchTree.insert!(node.left, value)
-      else
-        node.left = BSTNode.new(value)
-      end
-    end
+
   end
 
   def empty?(node)
