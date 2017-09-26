@@ -6,6 +6,4 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('message', (message) => {
     myChat.addMsg(message.text);
   });
-
-  myChat.input.focus();
 });
