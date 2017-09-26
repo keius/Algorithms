@@ -4,18 +4,12 @@ function ChatUI (socket) {
   this.chat = new Chat(socket);
   this.form = document.querySelector('form');
   this.msgList = document.querySelector('ul#msg-list');
-  this.roomList = document.querySelector('ul#room-list');
   this.input = document.querySelector('input');
-  this.room = document.querySelector('#room');
   this.submitHandler();
 }
 
 ChatUI.prototype.getInput = function () {
   return this.input.value;
-};
-
-ChatUI.prototype.sendMsg = function (room) {
-  this.chat.sendMessage(room, this.getInput());
 };
 
 ChatUI.prototype.addMsg = function (msg) {
@@ -34,18 +28,7 @@ ChatUI.prototype.submitHandler = function () {
 
 ChatUI.prototype.processUserInput = function () {
   const msg = this.getInput();
-
-  let response;
-
-  if (msg[0] === '/') {
-    response = this.chat.processCommand(msg);
-    if (response) {
-      this.addMsg(response);
-    }
-  } else {
-    this.sendMsg(this.room.textContent);
-    this.addMsg(msg);
-  }
+  this.addMsg(msg);
 };
 
 module.exports = ChatUI;
