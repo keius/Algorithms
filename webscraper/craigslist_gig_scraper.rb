@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 cities = ['newyork']
-search_terms = ['developer']
+search_terms = ['python']
 
 cities.each do |city|
   search_terms.each do |search_term|
@@ -12,6 +12,12 @@ cities.each do |city|
     document = open(url)
     content = document.read
     parsed_content = Nokogiri::HTML(content)
+
+    puts '==========================================='
+    puts '_                                         _'
+    puts "_         #{city} - #{search_term}        _"
+    puts '_                                         _'
+    puts '==========================================='
 
     parsed_content.css('.content').css('.result-row').each do |row|
       title = row.css('.hdrlnk').inner_text
