@@ -23,4 +23,4 @@ def merge(intervals)
     merged << [left, right]
 end
 
-print can_jump([2,3,1,1,4])
+print 4 & 5
