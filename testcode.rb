@@ -1,26 +1,10 @@
 require 'byebug'
 
-def merge(intervals)
-    return [] if intervals.empty?
-
-    merged = []
-
-    intervals.sort! {|interval| interval.start}
-
-    left = intervals[0].start
-    right = intervals[0].end
-
-    intervals.each do |interval|
-        if interval.start.between?(left, right)
-            right = [right, interval.end].max
-        else
-            merged << [left, right]
-            left = interval.start
-            right = interval.end
-        end
-    end
-
-    merged << [left, right]
+def subsets(arr)
+  return [[]] if arr.empty?
+  (0..arr.length - 1).each do |i|
+    print arr.take(i) + arr.drop(i+1)
+  end
 end
 
-print 4 & 5
+print subsets([1, 2])
