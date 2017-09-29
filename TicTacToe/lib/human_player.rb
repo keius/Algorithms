@@ -6,14 +6,12 @@ class HumanPlayer
     @name = name
   end
 
-  def get_move
-    puts "Put mark where?"
-    pos = gets.chomp.split(",").map(&:to_i)
+  def display(board)
+    puts board.grid.to_s
   end
 
-  def display(board)
-    puts board.grid[0].to_s
-    puts board.grid[1].to_s
-    puts board.grid[2].to_s
+  def get_move
+    puts "Where to place mark?"
+    gets.chomp.split(",").map(&:to_i)
   end
 end

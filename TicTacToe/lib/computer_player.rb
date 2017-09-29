@@ -5,7 +5,7 @@ class ComputerPlayer
   def initialize(name)
     @name = name
   end
-
+  
   def display(board)
     @board = board
   end

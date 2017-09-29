@@ -1,4 +1,4 @@
-require "game"
+require "human_player"
 
 describe "HumanPlayer" do
   let(:human) { HumanPlayer.new("Frankie") }

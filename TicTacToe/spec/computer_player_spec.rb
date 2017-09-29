@@ -1,4 +1,4 @@
-require "game"
+require "computer_player"
 
 describe "ComputerPlayer" do
   let(:comp) { ComputerPlayer.new("Bonzo") }
