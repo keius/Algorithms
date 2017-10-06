@@ -1,17 +1,16 @@
 require 'byebug'
 
-def magic_index(arr, start_idx = 0, end_idx = 0)
-  return false if arr.length < 1
-  mid = start_idx + end_idx / 2
+def subsets(arr)
+  return [[]] if arr.empty?
 
-  case arr[mid] <=> mid
-  when 0
-    return true
-  when 1
-    magic_index(arr, mid + 1, end_idx)
-  when -1
-    magic_index(arr, start_idx, mid - 1)
-  end
+  print arr.dup
+  print nums.pop
+
+  # new_subsets = prev_subsets.each do |subset|
+  #   subset << last
+  # end
+
+  # prev_subsets
 end
 
-print magic_index([1, 2, 3, 9])
+print subsets([1])
