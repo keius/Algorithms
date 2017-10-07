@@ -3,14 +3,14 @@ require 'byebug'
 def subsets(arr)
   return [[]] if arr.empty?
 
-  print arr.dup
-  print nums.pop
+  last = arr.pop
+  prev_sets = subsets(arr)
 
-  # new_subsets = prev_subsets.each do |subset|
-  #   subset << last
-  # end
+  new_sets = prev_sets.map do |subset|
+    subset.dup << last
+  end
 
-  # prev_subsets
+  prev_sets + new_sets
 end
 
-print subsets([1])
+print subsets([1, 2, 3])
