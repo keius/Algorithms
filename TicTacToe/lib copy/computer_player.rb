@@ -5,7 +5,7 @@ class ComputerPlayer
   def initialize(name)
     @name = name
   end
-
+  
   def display(board)
     @board = board
   end
@@ -20,12 +20,13 @@ class ComputerPlayer
     end
 
     moves.each do |move|
-      @board.place_mark(move, @mark)
+      @board.place_mark(move, mark)
       if @board.winner
         @board[move] = nil
         return move
       else
         @board[move] = nil
+        next
       end
     end
 

@@ -1,7 +1,7 @@
 class Board
   attr_reader :grid
 
-  def initialize(grid = Array.new(3) { Array.new(3) })
+  def initialize(grid = Array.new(3) {Array.new(3)})
     @grid = grid
   end
 
@@ -23,33 +23,35 @@ class Board
     self[pos].nil?
   end
 
+  def over?
+    @grid.flatten.none?(&:nil?) || winner
+  end
+
   def winner
-    (@grid + diagonals + columns).each do |triple|
+    (@grid + col + diag).each do |triple|
       return :X if triple == [:X, :X, :X]
       return :O if triple == [:O, :O, :O]
     end
-
-    nil
+    return nil
   end
 
-  def over?
-    winner || @grid.flatten.none?(&:nil?)
-  end
-
-  def diagonals
-    dia1 = [[0,0],[1,1],[2,2]]
-    dia2 = [[2,0],[1,1],[0,2]]
-
-    [dia1.map{|pos1| self[pos1]}, dia2.map{|pos2| self[pos2]}]
-  end
-
-  def columns
-    columns = Array.new(3) {Array.new}
-    @grid.each do |row|
+  private
+  def col
+    cols = Array.new(3) {Array.new(3)}
+    (0..2).each do |row|
       (0..2).each do |col|
-        columns[col] << row[col]
+        cols[col][row] = @grid[row][col]
       end
     end
-    columns
+    cols
+  end
+
+  def diag
+    diags = [[[0,0],[1,1],[2,2]],[[2,0],[1,1],[0,2]]]
+    diags.map do |triple|
+      triple.map do |pos|
+        self[pos]
+      end
+    end
   end
 end

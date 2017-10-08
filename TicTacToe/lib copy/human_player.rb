@@ -7,9 +7,7 @@ class HumanPlayer
   end
 
   def display(board)
-    (board.grid).each do |row|
-      puts row.to_s
-    end
+    puts board.grid.to_s
   end
 
   def get_move
