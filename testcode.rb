@@ -30,21 +30,37 @@ def permutations(arr)
   perms
 end
 
-def parentheses(n, left = n, right = 0)
-  return [] if n == 0
-
+def parentheses(n)
   combs = []
-  current_string = ""
+  addpar(combs, "", n, 0)
+  combs
+end
 
-  while left > 0
-    current_string + "("
-    left -= 1
-    right += 1
+def addpar(result, str, left, right)
+  if left == 0 && right == 0
+    result << str
   end
 
-  while right > 0
-    current_string + ")"
-    right -= 1
-    combs << current_string
+  addpar(result, str + "(", left - 1, right + 1) if left > 0
+  addpar(result, str + ")", left, right - 1) if right > 0
+end
+
+def make_change(target, coins)
+  return [] if target == 0
+  return nil if coins.empty?
+
+  coins = coins.sort.reverse
+
+  combs = []
+
+  coins.each_with_index do |coin, idx|
+    next if coin > target
+    remainder = target - coin
+    prev_change = make_change(remainder, coin.drop(idx))
+    next if prev_change.nil?
+
+    current_change = prev_change.each do |comb|
+      [coin] + comb.dup
+    end
   end
 end
