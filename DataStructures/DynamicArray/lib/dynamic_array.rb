@@ -25,42 +25,36 @@ class DynamicArray
   # O(1)
   def pop
     raise "index out of bounds" if @length == 0
-    val, @store[@length - 1] = @store[@length - 1], nil
+    self[@length - 1] = nil
     @length -= 1
-    val
   end
 
   # O(1) ammortized; O(n) worst case. Variable because of the possible
   # resize.
   def push(val)
     resize! if @length == @capacity
-    @store[@length] = val
     @length += 1
-    nil
+    self[@length - 1] = val
   end
 
   # O(n): has to shift over all the elements.
   def shift
     raise "index out of bounds" if @length == 0
-    val = @store[0]
-
-    (1...@length).each do |num|
-      @store[num-1] = @store[num]
+    (1..@length - 1).each do |i|
+      self[i - 1] = self[i]
     end
+    self[@length - 1] = nil
     @length -= 1
-
-    val
   end
 
   # O(n): has to shift over all the elements.
   def unshift(val)
     resize! if @length == @capacity
-    @length.downto(0) do |i|
-      @store[i] = @store[i - 1]
-    end
-    @store[0] = val
     @length += 1
-    nil
+    (@length - 2).downto(0) do |i|
+      self[i+1] = self[i]
+    end
+    self[0] = val
   end
 
   protected
@@ -68,14 +62,18 @@ class DynamicArray
   attr_writer :length
 
   def check_index(index)
-    raise "index out of bounds" unless index >= 0 && index < @length
+    unless (index >= 0) && (index < length)
+      raise "index out of bounds"
+    end
   end
 
   # O(n): has to copy over all the elements to the new store.
   def resize!
-    @capacity *= 2
-    new_store = StaticArray.new(capacity)
-    @length.times {|num| new_store[num] = @store[num]}
-    @store = new_store
+    new_capacity = capacity * 2
+    new_store = StaticArray.new(new_capacity)
+    length.times { |i| new_store[i] = self[i] }
+
+    self.capacity = new_capacity
+    self.store = new_store
   end
 end

@@ -4,59 +4,55 @@ class RingBuffer
   attr_reader :length
 
   def initialize
-    self.store, self.capacity = StaticArray.new(8), 8
-    self.start_idx, self.length = 0, 0
+    @store = StaticArray.new(8)
+    @capacity = 8
+    @length = 0
+    @start_idx = 0
   end
 
   # O(1)
   def [](index)
     check_index(index)
-    store[(start_idx + index) % capacity]
+    @store[(index + @start_idx) % capacity]
   end
 
   # O(1)
   def []=(index, val)
     check_index(index)
-    store[(start_idx + index) % capacity] = val
+    @store[(index + @start_idx) % capacity] = val
   end
 
   # O(1)
   def pop
-    raise "index out of bounds" if (length == 0)
-
-    val, self[length - 1] = self[length - 1], nil
-    self.length -= 1
-
-    val
+    raise "index out of bounds" if @length == 0
+    remove = self[@length - 1]
+    self[@length - 1] = nil
+    @length -= 1
+    remove
   end
 
   # O(1) ammortized
   def push(val)
-    resize! if (length == capacity)
-
-    self.length += 1
-    self[length - 1] = val
-
-    nil
+    resize! if @length == @capacity
+    @length += 1
+    self[@length - 1] = val
   end
 
   # O(1)
   def shift
-    raise "index out of bounds" if (length == 0)
-
-    val, self[0] = self[0], nil
-    self.start_idx = (start_idx + 1) % capacity
-    self.length -= 1
-
-    val
+    raise "index out of bounds" if @length == 0
+    remove = self[0]
+    self[0] = nil
+    @length -= 1
+    @start_idx += 1
+    remove
   end
 
   # O(1) ammortized
   def unshift(val)
-    resize! if (length == capacity)
-
-    self.start_idx = (start_idx - 1) % capacity
-    self.length += 1
+    resize! if @length == @capacity
+    @length += 1
+    @start_idx -= 1
     self[0] = val
   end
 
@@ -65,9 +61,7 @@ class RingBuffer
   attr_writer :length
 
   def check_index(index)
-    unless (index >= 0) && (index < length)
-      raise "index out of bounds"
-    end
+    raise "index out of bounds" unless index >= 0 && index < @length
   end
 
   def resize!

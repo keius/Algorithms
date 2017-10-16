@@ -11,8 +11,8 @@ class QueueWithMax
   attr_reader :store, :maxque
 
   def initialize
-    @store = RingBuffer.new
     @maxque = RingBuffer.new
+    @store = RingBuffer.new
   end
 
   def enqueue(el)
@@ -21,9 +21,10 @@ class QueueWithMax
   end
 
   def dequeue
-    val = @store.shift
-    @maxque.shift if val == maxque[0]
-    val
+    remove = @store.shift
+    if remove == max
+      @maxque.shift
+    end
   end
 
   def max
@@ -31,11 +32,12 @@ class QueueWithMax
   end
 
   def update_maxque(el)
-    while @maxque[0] && @maxque[@maxque.length - 1] < el
+    while @maxque.length > 0 && @maxque[@maxque.length - 1] < el
       @maxque.pop
     end
-  rescue
     @maxque.push(el)
+  rescue
+
   end
 
   def length
