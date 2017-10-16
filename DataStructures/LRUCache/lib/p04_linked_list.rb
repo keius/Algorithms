@@ -76,17 +76,16 @@ class LinkedList
     each do |node|
       if node.key == key
         node.val = val
-        break
+        return node
       end
     end
-    nil
   end
 
   def remove(key)
     each do |node|
       if node.key == key
         node.remove
-        return node
+        return node.val
       end
     end
     nil
