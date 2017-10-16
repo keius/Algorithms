@@ -13,8 +13,8 @@ class Node
   end
 
   def remove
-    @prev.next = @next
-    @next.prev = @prev
+    @prev.next = @next if @prev
+    @next.prev = @prev if @next
     @next, @prev = nil, nil
   end
 end
@@ -68,6 +68,8 @@ class LinkedList
     new_node.prev = last_node
     new_node.next = @tail
     @tail.prev = new_node
+
+    new_node
   end
 
   def update(key, val)
