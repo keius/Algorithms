@@ -64,3 +64,35 @@ def make_change(target, coins)
     end
   end
 end
+
+def count_battleships(board)
+    count = 0
+
+    (0...board.length).each do |row|
+        (0...board[0].length).each do |col|
+            count += check_ship(board, row, col) if board[row][col] =="X"
+        end
+    end
+
+    count
+end
+
+def check_ship(board, row, col)
+  neighbors = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+  neighbor_ship = nil
+  neighbors.each do |delta|
+      if (row + delta[0]).between?(0, board.length - 1) && (col + delta[1]).between?(0, board[0].length - 1) && board[row + delta[0]][col + delta[1]] == "X"
+          neighbor_ship = [row + delta[0], col + delta[1]]
+      end
+  end
+
+  board[row][col] = "."
+
+  if neighbor_ship
+      check_ship(board, neighbor_ship[0], neighbor_ship[1])
+  else
+      return 1
+  end
+end
+
+print count_battleships([["X",".",".","X"],[".",".",".","X"],[".",".",".","X"]])
