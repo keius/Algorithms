@@ -95,4 +95,19 @@ def check_ship(board, row, col)
   end
 end
 
-print count_battleships([["X",".",".","X"],[".",".",".","X"],[".",".",".","X"]])
+def find_duplicates(nums)
+    dups = []
+    debugger
+    nums.each_index do |i|
+        index = (nums[i] % nums.length)
+        nums[index] += nums.length
+    end
+
+    nums.each_index do |i|
+        dups << i if (nums[i] / nums.length) > 1
+    end
+
+    dups
+end
+
+print find_duplicates([4,3,2,7,8,2,3,1])
