@@ -1,12 +1,11 @@
 require 'open-uri'
 require 'nokogiri'
 
-cities = ['newyork']
-search_terms = ['python']
+cities = ['sanfrancisco']
+search_terms = ['software engineer']
 
 cities.each do |city|
   search_terms.each do |search_term|
-
     url = "https://#{city}.craigslist.org/search/cpg?query=#{search_term}&is_paid=all"
 
     document = open(url)
