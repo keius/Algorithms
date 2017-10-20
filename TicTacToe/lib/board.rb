@@ -6,17 +6,17 @@ class Board
   end
 
   def [](pos)
-    x, y = pos
-    @grid[x][y]
+    row, col = pos
+    @grid[row][col]
   end
 
-  def []=(pos, value)
-    x, y = pos
-    @grid[x][y] = value
+  def []=(pos, val)
+    row, col = pos
+    @grid[row][col] = val
   end
 
   def place_mark(pos, mark)
-    self[pos] = mark
+    self[pos] = mark if empty?(pos)
   end
 
   def empty?(pos)
@@ -24,7 +24,7 @@ class Board
   end
 
   def over?
-    @grid.flatten.none?(&:nil?) || winner
+    winner || @grid.flatten.none?(&:nil?)
   end
 
   def winner
@@ -32,7 +32,7 @@ class Board
       return :X if triple == [:X, :X, :X]
       return :O if triple == [:O, :O, :O]
     end
-    return nil
+    nil
   end
 
   private
@@ -43,15 +43,12 @@ class Board
         cols[col][row] = @grid[row][col]
       end
     end
+
     cols
   end
 
   def diag
-    diags = [[[0,0],[1,1],[2,2]],[[2,0],[1,1],[0,2]]]
-    diags.map do |triple|
-      triple.map do |pos|
-        self[pos]
-      end
-    end
+    diags = [[[0, 0], [1, 1], [2, 2]], [[2, 0], [1, 1], [0, 2]]]
+    diags.map {|diag| diag.map {|pos| self[pos]}}
   end
 end

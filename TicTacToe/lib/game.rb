@@ -1,31 +1,43 @@
 require_relative 'board'
-require_relative 'human_player'
 require_relative 'computer_player'
+require_relative 'human_player'
 
 class Game
-  attr_reader :board, :current_player, :player1, :player2
+  attr_reader :board, :player1, :player2, :current_player
 
-  def initialize(player1, player2)
-    @board = Board.new
-    @player1, @player2 = player1, player2
+  def initialize(board = Board.new, player1, player2)
+    @board = board
+    @player1 = player1
+    @player2 = player2
     @current_player = player1
+
+    @player1.mark = :X
+    @player2.mark = :O
   end
 
   def run
-    until @board.over?
+    until over?
       play_turn
     end
 
-    player1.display(@board)
-    puts "Game over!"
+    if @board.winner
+      puts "#{@board.winner} has won!"
+    else
+      puts "It's a tie!"
+    end
   end
 
   def play_turn
-    current_player.display(board)
-    move = current_player.get_move
+    @current_player.display(@board)
+    unless @board.winner
+      pos = @current_player.get_move
+      @board.place_mark(pos, @current_player.mark)
+      switch_players!
+    end
+  end
 
-    @board.place_mark(move, current_player.mark)
-    switch_players!
+  def over?
+    @board.over?
   end
 
   def switch_players!
@@ -33,13 +45,6 @@ class Game
   end
 end
 
-puts "What's your name?"
+puts "What is your name?"
 player1 = HumanPlayer.new(gets.chomp)
-player1.mark = :X
-
-puts "What's your opponent's name?"
-player2 = ComputerPlayer.new(gets.chomp)
-player2.mark = :O
-
-game = Game.new(player1, player2)
-game.run
+Game.new(player1, ComputerPlayer.new('garry')).run
