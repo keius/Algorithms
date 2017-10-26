@@ -1,4 +1,3 @@
-
 class ComputerPlayer
   attr_reader :name, :board
   attr_accessor :mark
@@ -21,16 +20,15 @@ class ComputerPlayer
     end
 
     moves.each do |move|
-      @board.place_mark(move, mark)
+      @board.place_mark(move, @mark)
       if @board.winner
         @board[move] = nil
         return move
       else
         @board[move] = nil
-        next
       end
     end
 
-    return moves.sample
+    moves.sample
   end
 end

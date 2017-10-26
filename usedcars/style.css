@@ -1,0 +1,12 @@
+div {
+  width: 50px;
+  height: 100px;
+  padding: 25px;
+}
+#child {
+  box-sizing: border-box;
+  background-color: blue;
+}
+#child1 {
+  background-color: red;
+}
