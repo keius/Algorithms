@@ -26585,7 +26585,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    todos: (0, _selectors.allTodos)(state)
+    todos: (0, _selectors.allTodos)(state),
+    state: state
   };
 };
 
@@ -26636,10 +26637,27 @@ var TodoList = function (_React$Component) {
   _createClass(TodoList, [{
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          todos = _props.todos,
+          receiveTodo = _props.receiveTodo;
+
+
+      var todoItems = todos.map(function (todo) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          todo.title
+        )
+        // key={`todo-list-item${todo.id}`}
+        // todo={todo}
+        // receiveTodo={receiveTodo}/>
+        ;
+      });
+
       return _react2.default.createElement(
-        'h3',
+        'ul',
         null,
-        'Todo List'
+        todoItems
       );
     }
   }]);
@@ -26661,9 +26679,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var allTodos = exports.allTodos = function allTodos(_ref) {
   var todos = _ref.todos;
-
-  Object.keys(todos).map(function (id) {
-    todos[id];
+  return Object.keys(todos).map(function (id) {
+    return todos[id];
   });
 };
 
