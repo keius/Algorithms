@@ -45,43 +45,47 @@ def addpar(result, str, left, right)
   addpar(result, str + ")", left, right - 1) if right > 0
 end
 
-def make_change(target, coins)
-  return [] if target == 0
-  return nil if coins.empty?
+class TreeNode
+  attr_reader :value
+  attr_accessor :left, :right
 
-  coins = coins.sort.reverse
+  def initialize(value)
+    @value = value
+    @left = nil
+    @right = nil
+  end
+end
 
-  combs = []
+def inorder_traversal(root)
+  return [] if root.nil?
 
-  coins.each_with_index do |coin, idx|
-    next if coin > target
-    remainder = target - coin
-    prev_change = make_change(remainder, coins.drop(idx))
-    next if prev_change.nil?
+  traversed = []
 
-    current_change = prev_change.each do |comb|
-      [coin] + comb.dup
-    end
+  traversed << root.value
+  traversed += inorder_traversal(root.left)
+  traversed += inorder_traversal(root.right)
 
-    combs += current_change
+  traversed
+end
+
+def cycle?(arr)
+  return false if arr.empty?
+
+  visited = {}
+  queue = [0]
+
+  until queue.empty?
+    current_node = queue.shift
+    next if visited[current_node]
+    return true if arr[current_node].any? {|out_edge| visited[out_edge]}
+    visited[current_node] = true
+    queue += arr[current_node]
   end
 
-  combs
+  return false
 end
 
-def reconstruct_queue(people)
-    people = people.sort_by {|person| [-1 * person[0], person[1]]}
+arr = [[1], [2], [3,4], [4], [0]]
+arr2 = [[1,2,3], [2,3], [3], []]
 
-    queue = []
-    people.each do |person|
-      if queue.empty?
-        queue << person
-      else
-        queue.insert(person[1], person)
-      end
-    end
-
-    queue
-end
-
-print make_change(14, [2, 7, 10])
+print cycle?(arr)
