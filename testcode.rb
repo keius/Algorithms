@@ -68,24 +68,50 @@ def inorder_traversal(root)
   traversed
 end
 
-def cycle?(arr)
-  return false if arr.empty?
 
-  visited = {}
-  queue = [0]
+
+def nested_string(arr)
+  depth_map = {}
+  print_arr = []
+
+  queue = arr
 
   until queue.empty?
-    current_node = queue.shift
-    next if visited[current_node]
-    return true if arr[current_node].any? {|out_edge| visited[out_edge]}
-    visited[current_node] = true
-    queue += arr[current_node]
+    current = queue.shift
+
+    if depth_map[current["name"]]
+      print_arr << current["owns"] unless depth_map[current["owns"]]
+      depth_map[current["owns"]] = depth_map[current["name"]] + 1
+    else
+      print_arr << current["name"] unless depth_map[current["name"]]
+      depth_map[current["name"]] = 0
+      depth_map[current["owns"]] = depth_map[current["name"]] + 1
+    end
+
+
+
+    selected = queue.select {|el| el["name"] == current["owns"]}
+    rejected = queue.reject {|el| el["name"] == current["owns"]}
+
+    queue = selected + rejected
   end
 
-  return false
+  print_arr.each do |el|
+    tabspace = " " * depth_map[el]
+    puts tabspace + "-#{el}"
+  end
 end
 
-arr = [[1], [2], [3,4], [4], [0]]
-arr2 = [[1,2,3], [2,3], [3], []]
 
-print cycle?(arr)
+arr = [
+  {"name" => "Joe", "owns" => "Clover"},
+  {"name" => "Joe", "owns" => "Joe's Yolk"},
+  {"name" => "Joe", "owns" => "L's Holdings"},
+  {"name" => "Joe's Yolk", "owns" => "Google"},
+  {"name" => "Joe's Yolk", "owns" => "Facebook"},
+  {"name" => "L's Holdings", "owns" => "L Trust"},
+  {"name" => "L's Holdings", "owns" => "Banana"},
+  {"name" => "L Trust", "owns" => "Apple"}
+]
+
+nested_string(arr)

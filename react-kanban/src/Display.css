@@ -1,0 +1,25 @@
+.display-container {
+  display: flex;
+  border: 2px solid black;
+  padding: 12.5px;
+}
+
+.header1 {
+  color: white;
+  background-color: #8e6e95;
+}
+
+.header2 {
+  color: white;
+  background-color: #39a59c;
+}
+
+.header3 {
+  color: white;
+  background-color: #344759;
+}
+
+.header4 {
+  color: white;
+  background-color: #e8741e;
+}

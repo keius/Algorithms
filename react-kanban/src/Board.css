@@ -1,0 +1,10 @@
+.board-container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid red;
+  margin: 12.5px;
+}
+
+.board-header {
+  background-color: #8e6e95;
+}
